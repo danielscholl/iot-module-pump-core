@@ -1,0 +1,73 @@
+# Required Group Variables
+# IOT_HUB: danielscholl
+# SERVICE_ENDPOINT: daschollCAT
+# PUMP_VERSION: 0.0.1
+# WORKSPACE_ID: 
+# WORKSPACE_KEY:
+
+trigger:
+  branches:
+    include:
+    - master
+  paths:
+    include:
+    - EdgeSolution/*.template.json
+
+variables:
+- group: iot-group
+
+strategy:
+  matrix:
+    linux:
+      imageName: 'ubuntu-latest'
+      platform: 'amd64'
+      os: 'linux'
+      HostStoragePath: '/etc/iotedge/storage/'
+      ModuleStoragePath: '/iotedge/storage/'
+    windows:
+      imageName: 'windows-latest'
+      platform: 'windows-amd64'
+      os: 'windows'
+      HostStoragePath: 'C:\ProgramData\iotedge\storage'
+      ModuleStoragePath: 'C:\iotedge\storage'
+  maxParallel: 2
+
+pool:
+  vmImage: $(imageName)
+
+steps:
+
+- task: qetza.replacetokens.replacetokens-task.replacetokens@3
+  displayName: 'Replace tokens in module.json'
+  inputs:
+    rootDirectory: pumpModule
+    targetFiles: module.json
+
+- task: qetza.replacetokens.replacetokens-task.replacetokens@3
+  displayName: 'Replace tokens in deployment.pipeline.template.json'
+  inputs:
+    rootDirectory: EdgeSolution
+    targetFiles: deployment.pipeline.template.json
+
+- task: AzureIoTEdge@2
+  displayName: 'Azure IoT Edge - Generate deployment manifest'
+  inputs:
+    action: 'Generate deployment manifest'
+    templateFilePath: EdgeSolution/deployment.pipeline.template.json
+    defaultPlatform: $(platform)
+    deploymentManifestOutputPath: $(Build.ArtifactStagingDirectory)/deployment.pipeline.$(platform).json
+
+- upload: $(Build.ArtifactStagingDirectory)
+  artifact: $(os)
+
+- task: AzureIoTEdge@2
+  displayName: 'Azure IoT Edge - Deploy to IoT Edge devices'
+  inputs:
+    action: 'Deploy to IoT Edge devices'
+    deploymentFilePath: '$(Build.ArtifactStagingDirectory)/deployment.pipeline.$(platform).json'
+    connectedServiceNameARM: $(SERVICE_ENDPOINT)
+    iothubname: $(IOT_HUB)
+    deviceOption: 'Multiple Devices'
+    deploymentid: 'iot-module-pump-$(os)'
+    targetcondition: "tags.platform='$(platform)'"
+    priority: 10

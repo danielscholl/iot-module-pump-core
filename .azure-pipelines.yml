@@ -1,0 +1,81 @@
+# Required Group Variables
+# IOT_HUB: danielscholl
+# SERVICE_ENDPOINT: daschollCAT
+# WORKSPACE_ID: 
+# WORKSPACE_KEY:
+
+trigger:
+  branches:
+    include:
+    - master
+  paths:
+    exclude:
+    - README.md
+    - .git*
+    - EdgeSolution/*.template.json
+
+variables:
+- group: iot-group
+
+strategy:
+  matrix:
+    linux:
+      imageName: 'ubuntu-latest'
+      platform: 'amd64'
+      os: 'linux'
+      HostStoragePath: '/etc/iotedge/storage/'
+      ModuleStoragePath: '/iotedge/storage/'
+    windows:
+      imageName: 'windows-latest'
+      platform: 'windows-amd64'
+      os: 'windows'
+      HostStoragePath: 'C:\ProgramData\iotedge\storage'
+      ModuleStoragePath: 'C:\iotedge\storage'
+  maxParallel: 2
+
+pool:
+  vmImage: $(imageName)
+
+steps:
+
+- task: qetza.replacetokens.replacetokens-task.replacetokens@3
+  displayName: 'Replace tokens in modules/**/module.json'
+  inputs:
+    rootDirectory: pumpModule
+    targetFiles: module.json
+
+- task: qetza.replacetokens.replacetokens-task.replacetokens@3
+  displayName: 'Replace tokens in template.json'
+  inputs:
+    rootDirectory: EdgeSolution
+    targetFiles: pipeline.template.json
+
+- task: AzureIoTEdge@2
+  displayName: 'Azure IoT Edge - Build module Images'
+  inputs:
+    templateFilePath: EdgeSolution/deployment.pipeline.template.json
+    defaultPlatform: $(platform)
+
+- task: AzureIoTEdge@2
+  displayName: 'Azure IoT Edge - Push Module Images'
+  inputs:
+    action: 'Push module images'
+    templateFilePath: EdgeSolution/deployment.pipeline.template.json
+    containerregistrytype: 'Generic Container Registry'
+    dockerRegistryConnection: dockerhub
+    defaultPlatform: $(platform)
+
+- task: AzureIoTEdge@2
+  displayName: 'Azure IoT Edge - Deploy to IoT Edge devices'
+  inputs:
+    action: 'Deploy to IoT Edge devices'
+    deploymentFilePath: '$(Build.ArtifactStagingDirectory)/deployment.pipeline.$(platform).json'
+    connectedServiceNameARM: $(SERVICE_ENDPOINT)
+    iothubname: $(IOT_HUB)
+    deviceOption: 'Multiple Devices'
+    deploymentid: iot-module-pump-$(os)
+    targetcondition: "tags.platform='$(platform)'"
+    priority: 10
+
+- upload: $(Build.ArtifactStagingDirectory)
+  artifact: $(os)
