@@ -120,7 +120,7 @@ namespace pumpModule
                 if (sendData)
                 {
                     var events = new List<MessageEvent>();
-                    var deviceId = Environment.MachineName + "-" + Environment.GetEnvironmentVariable("DEVICE");
+                    var deviceId = Environment.GetEnvironmentVariable("IOTEDGE_DEVICEID") + "-" + Environment.GetEnvironmentVariable("DEVICE");
 
                     for (int i = 0; i < eventCount; i++)
                     {
@@ -244,7 +244,7 @@ namespace pumpModule
                 {
                     Console.WriteLine($"\t\t SendData: {sendData.ToString()}");
                 }
-            } 
+            }
         }
 
         static Task<MethodResponse> PingMethod(MethodRequest methodRequest, object userContext)
