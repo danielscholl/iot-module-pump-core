@@ -13,6 +13,7 @@ trigger:
     - README.md
     - .git*
     - EdgeSolution/*.template.json
+    - .azure-pipelines-deploy.yml
 
 variables:
 - group: iot-group

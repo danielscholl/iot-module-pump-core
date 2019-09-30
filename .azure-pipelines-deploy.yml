@@ -12,6 +12,7 @@ trigger:
   paths:
     include:
     - EdgeSolution/*.template.json
+    - .azure-pipelines.yml
 
 variables:
 - group: iot-group

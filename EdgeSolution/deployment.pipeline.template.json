@@ -139,6 +139,17 @@
         "SendData": true,
         "EventCount": 1
       }
+    },
+    "metricsCollector": {
+      "properties.desired": {
+        "schemaVersion": "1.0",
+        "scrapeFrequencySecs": 300,
+        "metricsFormat": "Json",
+        "syncTarget": "AzureLogAnalytics",
+        "endpoints": {
+            "edgeHub": "http://edgeHub:9600/metrics"
+        }
+      }
     }
   }
 }
