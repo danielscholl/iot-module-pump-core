@@ -30,7 +30,7 @@ strategy:
       imageName: 'windows-latest'
       platform: 'windows-amd64'
       os: 'windows'
-      ContainerUser: 'ContainerAdminstrator'
+      ContainerUser: 'ContainerAdministrator'
       HostStoragePath: 'C:\ProgramData\iotedge\storage'
       ModuleStoragePath: 'C:\iotedge\storage'
   maxParallel: 2
