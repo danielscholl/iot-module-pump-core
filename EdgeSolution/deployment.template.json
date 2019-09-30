@@ -87,11 +87,11 @@
         }
       }
     },
-    "pump1": {
+    "pumpModule": {
       "properties.desired": {
-        "SendInterval": 500,
+        "SendInterval": 2000,
         "SendData": true,
-        "EventCount": 10
+        "EventCount": 1
       }
     }
   }
