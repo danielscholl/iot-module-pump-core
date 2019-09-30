@@ -48,7 +48,7 @@ steps:
   displayName: 'Replace tokens in template.json'
   inputs:
     rootDirectory: EdgeSolution
-    targetFiles: pipeline.template.json
+    targetFiles: deployment.pipeline.template.json
 
 - task: AzureIoTEdge@2
   displayName: 'Azure IoT Edge - Build module Images'
