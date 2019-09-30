@@ -4,7 +4,7 @@ This is a modified simulated temperature module used to test and modify differen
 
 ### Build using Azure Pipelines
 
-[![Build Status](https://dascholl.visualstudio.com/IoT/_apis/build/status/danielscholl.iot-module-pump-core?branchName=master)](https://dascholl.visualstudio.com/IoT/_build/latest?definitionId=54&branchName=master)
+[![Build Status](https://dascholl.visualstudio.com/IoT/_apis/build/status/danielscholl.iot-module-pump-core?branchName=master)](https://dascholl.visualstudio.com/IoT/_build/latest?definitionId=57&branchName=master)
 
 The DevOps Pipeline requires a Variable Group to be used as well as a Service Connection Endpoint
 
