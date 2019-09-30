@@ -49,7 +49,7 @@
             "settings": {
               "image": "mcr.microsoft.com/azureiotedge-hub:1.0.9-rc2",
               "createOptions": {
-                "User": "ContainerAdministrator",
+                "User": "#{ContainerUser}#",
                 "HostConfig": {
                   "Binds": [
                     "#{HostStoragePath}#:#{ModuleStoragePath}#"
