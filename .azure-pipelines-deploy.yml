@@ -11,8 +11,8 @@ trigger:
     - master
   paths:
     include:
-    - EdgeSolution/*.template.json
-    - .azure-pipelines.yml
+    - EdgeSolution/deployment.pipeline.template.json
+    - .azure-pipelines-deploy.yml
 
 variables:
 - group: iot-group

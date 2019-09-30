@@ -12,7 +12,7 @@ trigger:
     exclude:
     - README.md
     - .git*
-    - EdgeSolution/*.template.json
+    - EdgeSolution/deployment.pipeline.template.json
     - .azure-pipelines-deploy.yml
 
 variables:
