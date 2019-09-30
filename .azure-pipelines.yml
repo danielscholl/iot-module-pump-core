@@ -24,12 +24,14 @@ strategy:
       imageName: 'ubuntu-latest'
       platform: 'amd64'
       os: 'linux'
+      ContainerUser: 'edgehubuser'
       HostStoragePath: '/etc/iotedge/storage/'
       ModuleStoragePath: '/iotedge/storage/'
     windows:
       imageName: 'windows-latest'
       platform: 'windows-amd64'
       os: 'windows'
+      ContainerUser: 'ContainerAdministrator'
       HostStoragePath: 'C:\ProgramData\iotedge\storage'
       ModuleStoragePath: 'C:\iotedge\storage'
   maxParallel: 2
