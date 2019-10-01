@@ -100,7 +100,15 @@
                   }
                 }
               }
-            }
+            },
+            "env": {
+              "APPINSIGHTS_INSTRUMENTATIONKEY": {
+                  "value": "#{INSIGHTS_KEY}#"
+              },
+              "LOG_LEVEL": {
+                  "value": "info"
+              }
+          }
           },
           "metricsCollector": {
             "version": "1.0.0",

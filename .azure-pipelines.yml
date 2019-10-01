@@ -1,8 +1,10 @@
 # Required Group Variables
-# IOT_HUB: danielscholl
-# SERVICE_ENDPOINT: daschollCAT
+# IOT_HUB:
+# SERVICE_ENDPOINT:
+# PUMP_VERSION:
 # WORKSPACE_ID: 
 # WORKSPACE_KEY:
+# INSIGHTS_KEY:
 
 trigger:
   branches:
