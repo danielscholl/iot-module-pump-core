@@ -120,7 +120,9 @@ namespace pumpModule
                 if (sendData)
                 {
                     var events = new List<MessageEvent>();
-                    var deviceId = Environment.GetEnvironmentVariable("IOTEDGE_DEVICEID") + "-" + Environment.GetEnvironmentVariable("DEVICE");
+
+                    var deviceId = Environment.GetEnvironmentVariable("IOTEDGE_DEVICEID");
+                    if (String.IsNullOrEmpty(deviceId)) deviceId = Environment.MachineName;
 
                     for (int i = 0; i < eventCount; i++)
                     {
