@@ -116,7 +116,7 @@
             "status": "running",
             "restartPolicy": "always",
             "settings": {
-              "image": "veyalla/metricscollector:0.0.4-#{platform}#"
+              "image": "veyalla/metricscollector:0.0.5-#{platform}#"
             },  
             "env": {
               "AzMonWorkspaceId": {
@@ -143,7 +143,7 @@
     },
     "pumpModule": {
       "properties.desired": {
-        "SendInterval": 2000,
+        "SendInterval": 1000,
         "SendData": true,
         "EventCount": 1
       }
@@ -151,7 +151,7 @@
     "metricsCollector": {
       "properties.desired": {
         "schemaVersion": "1.0",
-        "scrapeFrequencySecs": 300,
+        "scrapeFrequencySecs": 60,
         "metricsFormat": "Json",
         "syncTarget": "AzureLogAnalytics",
         "endpoints": {
