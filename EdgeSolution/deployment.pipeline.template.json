@@ -105,8 +105,8 @@
               "APPINSIGHTS_INSTRUMENTATIONKEY": {
                   "value": "#{INSIGHTS_KEY}#"
               },
-              "LOG_LEVEL": {
-                  "value": "info"
+              "DEBUG": {
+                  "value": false
               }
           }
           },
